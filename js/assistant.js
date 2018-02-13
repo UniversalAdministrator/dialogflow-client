@@ -32,7 +32,7 @@
     //     startUp();
     // });
 
-    // This function will start Enfa, If the page loaded successfully
+    // This function will start, If the page loaded successfully
     var readyStateCheckInterval = setInterval(function() {
         if (document.readyState === "complete") {
             clearInterval(readyStateCheckInterval);
@@ -65,11 +65,11 @@
         // The text here will be played
         var followUpQuery = "";
 
-        // Enfa kit starts here
+        // kit starts here
         function startAssistantKit() {
             console.colorLog("Assistant Initialized")
 
-            // Template HTML for the Enfa chat panel
+            // Template HTML for the chat panel
             var AssistantPanelHtml = '<div id="audio-assistant" class="panel panel-primary"><div class="panel-heading">' +
                 '<span class="panel-title">Assistant</span><img src="' + imageDirectory + 'minimize.png" ' +
                 'class="minimize-icon"></div><div class="panel-body"><ul class="chatHistory"></ul></div>' +
@@ -719,7 +719,7 @@
                 if (fulfillment) {
                     var speechText = fulfillment['speech'] || '';
                     var messages = fulfillment['messages'] || [];
-                    var enfa_fb_data = getDatafromObject(fulfillment, 'data.facebook.attachment.payload', {});
+                    var fb_data = getDatafromObject(fulfillment, 'data.facebook.attachment.payload', {});
 
                     var l_container = $("<li><img class='user-icon right-space' src='" + icons.assistant + "'></li>");
                     chatHistory.append(l_container);
@@ -736,8 +736,8 @@
                     }
 
                     // Render List Products
-                    if(enfa_fb_data['elements']) {
-                        listEnfaFbCards(enfa_fb_data, chatHistory, action);
+                    if(fb_data['elements']) {
+                        listFbCards(fb_data, chatHistory, action);
                     } else {
                         contentPlaceholder.append("<div><span>" + speechText + "</span></div>");
                     }
@@ -845,10 +845,10 @@
                 }
             }
 
-            // Create list of enfa products
-            function listEnfaFbCards(enfa_fb_cards, content_placeholder, action) {
-                var products = enfa_fb_cards['elements'];
-                var view_more = enfa_fb_cards['buttons'] || [];
+            // Create list of  products
+            function listFbCards(fb_cards, content_placeholder, action) {
+                var products = fb_cards['elements'];
+                var view_more = fb_cards['buttons'] || [];
 
                 var cardWithImg = '<div class="card card-outline-info product"></div>';
                 var cardTitleTag = '<h4 class="card-title"></h4>';
@@ -1055,7 +1055,7 @@
         createLinkTag(customCSS);
         createLinkTag(animateCSS);
 
-        // Check jQuery library already exists, If not create script tag. Then start Enfa kit
+        // Check jQuery library already exists, If not create script tag. Then start kit
         if (!window.jQuery) {
             createScriptTag(jqueryJS, function () {
                 $ = window.jQuery;
