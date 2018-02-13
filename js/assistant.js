@@ -9,6 +9,8 @@
 
     console.colorLog("Assistant JS loaded")
     var $ = null;
+    var synth = window.speechSynthesis || {};
+    var voices = synth.getVoices();
     /**
      * Assistant reqires jQuery library
      */
@@ -499,8 +501,30 @@
             function textToSpeech(text) {
                 if(!text)
                     return;
-                var texts = splitSentences(text);
-                console.log(texts);
+                console.log(text);
+
+                  if (synth.speaking) {
+                    console.warn('speechSynthesis.speaking');
+                    synth.cancel();
+                  }
+
+                  var utterThis = new SpeechSynthesisUtterance(text);
+                  utterThis.onend = function (event) {
+                    console.log('SpeechSynthesisUtterance.onend');
+                  }
+                  utterThis.onerror = function (event) {
+                    console.error('SpeechSynthesisUtterance.onerror');
+                  }
+                  for(i = 0; i < voices.length ; i++) {
+                    if(voices[i].name.contains("en-US")) {
+                      utterThis.voice = voices[i];
+                      break;
+                    }
+                  }
+                  utterThis.pitch = 1;
+                  utterThis.rate = 1.2;
+                  synth.speak(utterThis);
+                  return;
 
                 var count = texts.length;
 
@@ -691,7 +715,7 @@
                     // Scroll to bottom
                     chatHistory.scrollTop(chatHistory[0].scrollHeight);
 
-                    if(isVoicRequest) {
+                    if(true || isVoicRequest) {
                         // Play audio
                         textToSpeech(speechText);
                     } else  if(followUpQuery) {
