@@ -98,6 +98,33 @@
                 assistant : imageDirectory + 'female.png',
             }
 
+            $.fn.extend({
+              animateCss: function(animationName, callback) {
+                var animationEnd = (function(el) {
+                  var animations = {
+                    animation: 'animationend',
+                    OAnimation: 'oAnimationEnd',
+                    MozAnimation: 'mozAnimationEnd',
+                    WebkitAnimation: 'webkitAnimationEnd',
+                  };
+
+                  for (var t in animations) {
+                    if (el.style[t] !== undefined) {
+                      return animations[t];
+                    }
+                  }
+                })(document.createElement('div'));
+
+                this.addClass('animated ' + animationName).one(animationEnd, function() {
+                  $(this).removeClass('animated ' + animationName);
+
+                  if (typeof callback === 'function') callback();
+                });
+
+                return this;
+              },
+            });
+
             // Avatar img not showing workaround
             $('body').append('<img src="' + icons.assistant +
                                 '" style="display: none;">');
@@ -325,11 +352,13 @@
             minimizeIcon.click(function(event) {
                 var panelBody = $(".panel-body, .panel-footer", assistantPanel);
                 if(panelBody.hasClass("hide")) {
-                    panelBody.removeClass("hide");
-                    assistantPanel.removeClass("minimize");
+                    panelBody.removeClass("hide").animateCss('slideInUp');
+                    assistantPanel.removeClass("minimize").animateCss('slideInUp');
                 } else {
-                    panelBody.addClass("hide");
-                    assistantPanel.addClass("minimize");
+                    assistantPanel.animateCss('slideOutDown', function () {
+                      panelBody.addClass("hide");
+                      assistantPanel.addClass("minimize");
+                    });
                 }
             });
 
@@ -1020,9 +1049,11 @@
 
         // Load required JS Libraries
         var customCSS = cssDirectory + "custom.css"
+        var animateCSS = cssDirectory + "animate.css"
         var jqueryJS = "https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"
 
         createLinkTag(customCSS);
+        createLinkTag(animateCSS);
 
         // Check jQuery library already exists, If not create script tag. Then start Enfa kit
         if (!window.jQuery) {
