@@ -3,7 +3,7 @@
 (function() {
 
     // Print colored log in the Console
-    console.colorLog = function (str) {
+    console.colorLog = function(str) {
         console.log("%c" + str, 'color: purple;');
     }
 
@@ -94,40 +94,40 @@
             };
 
             var icons = {
-                user : imageDirectory + 'female.png',
-                assistant : imageDirectory + 'female.png',
+                user: imageDirectory + 'female.png',
+                assistant: imageDirectory + 'female.png',
             }
 
             $.fn.extend({
-              animateCss: function(animationName, callback) {
-                var animationEnd = (function(el) {
-                  var animations = {
-                    animation: 'animationend',
-                    OAnimation: 'oAnimationEnd',
-                    MozAnimation: 'mozAnimationEnd',
-                    WebkitAnimation: 'webkitAnimationEnd',
-                  };
+                animateCss: function(animationName, callback) {
+                    var animationEnd = (function(el) {
+                        var animations = {
+                            animation: 'animationend',
+                            OAnimation: 'oAnimationEnd',
+                            MozAnimation: 'mozAnimationEnd',
+                            WebkitAnimation: 'webkitAnimationEnd',
+                        };
 
-                  for (var t in animations) {
-                    if (el.style[t] !== undefined) {
-                      return animations[t];
-                    }
-                  }
-                })(document.createElement('div'));
+                        for (var t in animations) {
+                            if (el.style[t] !== undefined) {
+                                return animations[t];
+                            }
+                        }
+                    })(document.createElement('div'));
 
-                this.addClass('animated ' + animationName).one(animationEnd, function() {
-                  $(this).removeClass('animated ' + animationName);
+                    this.addClass('animated ' + animationName).one(animationEnd, function() {
+                        $(this).removeClass('animated ' + animationName);
 
-                  if (typeof callback === 'function') callback();
-                });
+                        if (typeof callback === 'function') callback();
+                    });
 
-                return this;
-              },
+                    return this;
+                },
             });
 
             // Avatar img not showing workaround
             $('body').append('<img src="' + icons.assistant +
-                                '" style="display: none;">');
+                '" style="display: none;">');
 
             var ClearQuery = false;
 
@@ -152,27 +152,27 @@
                     sendQuery: function(queryText, callback, errorCallback) {
                         // Not sending SourceAccount Number with query api
                         var context_param = {
-                            "san" : "" // (assistantOptions.loginToken || "")
+                            "san": "" // (assistantOptions.loginToken || "")
                         };
 
                         var param = {
-                            "lang" : "en",
-                            "query" : queryText,
-                            "sessionId" : apiSessionID,
-                            "contexts" : [{
-                                "name" : "mjn",
-                                "lifespan" : 1,
-                                "parameters" : context_param
+                            "lang": "en",
+                            "query": queryText,
+                            "sessionId": apiSessionID,
+                            "contexts": [{
+                                "name": "mjn",
+                                "lifespan": 1,
+                                "parameters": context_param
                             }]
                         };
 
                         var header = {
-                            "Authorization" : "Bearer " + accessToken,
-                            "Content-Type" : "application/json; charset=utf-8"
+                            "Authorization": "Bearer " + accessToken,
+                            "Content-Type": "application/json; charset=utf-8"
                         };
 
                         var options = {
-                            "responseType" : "json"
+                            "responseType": "json"
                         };
 
                         ajaxFunctions.makeRequest(queryBaseUrl, "POST", JSON.stringify(param), header, options, callback, errorCallback);
@@ -183,17 +183,17 @@
                         //     .catch(errorCallback);
 
                         var param = {
-                            "lang" : "en-US",
-                            "text" : encodeURIComponent(encodeURIComponent(text)),
-                            "v" : "20150910"
+                            "lang": "en-US",
+                            "text": encodeURIComponent(encodeURIComponent(text)),
+                            "v": "20150910"
                         }
 
                         var header = {
-                            "Authorization" : "Bearer " + accessToken
+                            "Authorization": "Bearer " + accessToken
                         }
 
                         var options = {
-                            "responseType" : "arraybuffer"
+                            "responseType": "arraybuffer"
                         }
 
                         ajaxFunctions.makeRequest(ttsBaseUrl, "GET", param, header, options, callback, errorCallback);
@@ -204,15 +204,15 @@
                         var param = {};
                         var header = {};
                         var options = {
-                            "responseType" : "json"
+                            "responseType": "json"
                         };
 
-                        if(!errorCallback)
+                        if (!errorCallback)
                             errorCallback = callback;
 
                         ajaxFunctions.makeRequest(url, "GET", null, header, options, callback, errorCallback);
                     },
-                    makeRequest: function (url, method, params, headers, options, callback, errorCallback) {
+                    makeRequest: function(url, method, params, headers, options, callback, errorCallback) {
                         var httpRequest = new XMLHttpRequest();
 
                         if (!httpRequest) {
@@ -220,10 +220,10 @@
                             return false;
                         }
 
-                        if("GET" == method) {
+                        if ("GET" == method) {
                             var param_str = "";
 
-                            if(-1 == url.indexOf("?") && params) {
+                            if (-1 == url.indexOf("?") && params) {
                                 url += "?";
                             }
 
@@ -262,7 +262,7 @@
                         httpRequest.open(method, url);
 
                         // httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                        for(var k in headers)
+                        for (var k in headers)
                             httpRequest.setRequestHeader(k, headers[k]);
 
                         if ("POST" == method && params) {
@@ -278,13 +278,13 @@
 
             //Finding whether the operating device is mobile or not
             var mobile = (/Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i)
-                        .test(navigator.userAgent || navigator.vendor || window.opera);
+                .test(navigator.userAgent || navigator.vendor || window.opera);
             var isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
             //Finding wheter the brower is Chrome or not
             var isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
             var Opera = (navigator.userAgent.match(/Opera|OPR\//) ? true : false);
             var Edge = '-ms-scroll-limit' in document.documentElement.style &&
-                    '-ms-ime-align' in document.documentElement.style && !window.navigator.msPointerEnabled;
+                '-ms-ime-align' in document.documentElement.style && !window.navigator.msPointerEnabled;
 
             var micBtn;
             if (isChrome) {
@@ -300,7 +300,7 @@
             // set send button icon
             micIcon.attr("src", micBtn);
 
-            if(assistantOptions['loginTokenElementID']) {
+            if (assistantOptions['loginTokenElementID']) {
                 var authToken = $("#" + assistantOptions['loginTokenElementID']).val()
                 assistantOptions['authToken'] = authToken;
             }
@@ -328,7 +328,7 @@
             // Query Input clear text on focus
             // queryInput.focus(function(event) {
             //     if (ClearQuery) {
-                    // queryInput.val('');
+            // queryInput.val('');
             //     }
             // });
 
@@ -351,13 +351,13 @@
             // Panel minimize icon
             minimizeIcon.click(function(event) {
                 var panelBody = $(".panel-body, .panel-footer", assistantPanel);
-                if(panelBody.hasClass("hide")) {
+                if (panelBody.hasClass("hide")) {
                     panelBody.removeClass("hide").animateCss('slideInUp');
                     assistantPanel.removeClass("minimize").animateCss('slideInUp');
                 } else {
-                    assistantPanel.animateCss('slideOutDown', function () {
-                      panelBody.addClass("hide");
-                      assistantPanel.addClass("minimize");
+                    assistantPanel.animateCss('slideOutDown', function() {
+                        panelBody.addClass("hide");
+                        assistantPanel.addClass("minimize");
                     });
                 }
             });
@@ -452,7 +452,7 @@
             function updateSendIcon(resetIcon) {
                 var txt = queryInput.val().trim();
 
-                if(Status.recordingAvailable == true && (0 == txt.length || resetIcon)) {
+                if (Status.recordingAvailable == true && (0 == txt.length || resetIcon)) {
                     micIcon.attr("src", micImage.off);
                     askButton.removeClass("assistant-send-icon");
                     askButton.addClass("assistant-record-icon");
@@ -478,7 +478,7 @@
                 var text = queryInput.val().trim();
                 queryInput.val('');
 
-                if(FollowupQuery) {
+                if (FollowupQuery) {
                     text = FollowupQuery;
                 }
 
@@ -493,7 +493,7 @@
                 if (!FollowupQuery) {
                     chatHistory.append("<li><div class='col-12'>" +
                         "<div class='bubble mom-card-white tri-right border right-top'>" +
-                         text + "</div></div></li>");
+                        text + "</div></div></li>");
                     // Scroll to bottom
                     chatHistory.scrollTop(chatHistory[0].scrollHeight);
                 } else {
@@ -501,7 +501,7 @@
                 }
 
                 ajaxFunctions.sendQuery(text,
-                    (function (txt, isVoicRequest) {
+                    (function(txt, isVoicRequest) {
                         return function(res) {
                             console.log("Query API response: " + txt);
                             console.log("Requested using voice : " + isVoicRequest);
@@ -528,61 +528,61 @@
             // TTS api. Wait for all the audio reponse to receive. Then play the audio
             // in the correct sequence
             function textToSpeech(text) {
-                if(!text)
+                if (!text)
                     return;
                 console.log(text);
 
-                  if (synth.speaking) {
+                if (synth.speaking) {
                     console.warn('speechSynthesis.speaking');
                     synth.cancel();
-                  }
+                }
 
-                  var utterThis = new SpeechSynthesisUtterance(text);
-                  utterThis.onend = function (event) {
+                var utterThis = new SpeechSynthesisUtterance(text);
+                utterThis.onend = function(event) {
                     console.log('SpeechSynthesisUtterance.onend');
-                  }
-                  utterThis.onerror = function (event) {
+                }
+                utterThis.onerror = function(event) {
                     console.error('SpeechSynthesisUtterance.onerror');
-                  }
-                  for(i = 0; i < voices.length ; i++) {
-                    if(voices[i].name.contains("en-US")) {
-                      utterThis.voice = voices[i];
-                      break;
+                }
+                for (i = 0; i < voices.length; i++) {
+                    if (voices[i].name.contains("en-US")) {
+                        utterThis.voice = voices[i];
+                        break;
                     }
-                  }
-                  utterThis.pitch = 1;
-                  utterThis.rate = 1.2;
-                  synth.speak(utterThis);
-                  return;
+                }
+                utterThis.pitch = 1;
+                utterThis.rate = 1.2;
+                synth.speak(utterThis);
+                return;
 
                 var count = texts.length;
 
                 audioSeqTag++;
                 audioQueue = [];
 
-                for(var i in texts) {
-                    if(!texts[i])
+                for (var i in texts) {
+                    if (!texts[i])
                         continue;
-                    (function (tag, txt, l_i, count) {
+                    (function(tag, txt, l_i, count) {
                         // This Library will play the audio
                         ajaxFunctions.textToSpeech(txt,
-                        (function(l_tag, l_txt, index, l_count) {
-                            return function(resData) {
-                                console.colorLog("TTS API Audio downloaded: " +
-                                 index + " - " + l_tag + " : " + l_txt);
-                                // console.log(resData);
-                                audioContext.decodeAudioData(resData, function(buffer) {
-                                    addAudioBufferToQueue(l_tag, buffer, index, l_count);
-                                });
-                            };
-                        })(tag, txt, l_i, count),
-                        (function(l_tag, l_txt, index, l_count) {
-                            return function(error) {
-                                console.log("TTS API error");
-                                console.log(error);
-                                addAudioBufferToQueue(l_tag, null, index, l_count);
-                            }
-                        })(tag, txt, l_i, count));
+                            (function(l_tag, l_txt, index, l_count) {
+                                return function(resData) {
+                                    console.colorLog("TTS API Audio downloaded: " +
+                                        index + " - " + l_tag + " : " + l_txt);
+                                    // console.log(resData);
+                                    audioContext.decodeAudioData(resData, function(buffer) {
+                                        addAudioBufferToQueue(l_tag, buffer, index, l_count);
+                                    });
+                                };
+                            })(tag, txt, l_i, count),
+                            (function(l_tag, l_txt, index, l_count) {
+                                return function(error) {
+                                    console.log("TTS API error");
+                                    console.log(error);
+                                    addAudioBufferToQueue(l_tag, null, index, l_count);
+                                }
+                            })(tag, txt, l_i, count));
                     })(audioSeqTag, texts[i], i, count);
                 }
             }
@@ -593,7 +593,7 @@
             function addAudioBufferToQueue(tag, buffer, index, count) {
 
                 console.log("Tags : " + audioSeqTag + " : " + tag);
-                if(audioSeqTag > tag) {
+                if (audioSeqTag > tag) {
                     console.log("This is an old audio")
                     return;
                 }
@@ -606,11 +606,11 @@
 
                 var queueLen = 0;
                 for (var i = audioQueue.length - 1; i >= 0; i--) {
-                    if(audioQueue[i])
+                    if (audioQueue[i])
                         queueLen++;
                 }
 
-                if(count == queueLen) {
+                if (count == queueLen) {
                     var buf = audioQueue[0];
                     audioQueue.splice(0, 1);
                     playSound(buf);
@@ -620,14 +620,14 @@
             // Play the loaded file
             function playSound(buf) {
 
-                if(audioSource) {
-                    audioSource.onended = function () {
+                if (audioSource) {
+                    audioSource.onended = function() {
                         console.log("Dummy audio onEnded");
                     }
                     audioSource.stop();
                 }
 
-                if(!buf) {
+                if (!buf) {
                     audioEnded();
                 }
 
@@ -644,14 +644,14 @@
 
             // Stop playing audio and clear audio queue
             function stopAudio() {
-                if(audioSource) {
-                    audioSource.onended = function () {
+                if (audioSource) {
+                    audioSource.onended = function() {
                         console.log("Dummy audio onEnded");
                     }
                     audioSource.stop();
                 }
                 audioSeqTag++;
-                if(audioQueue.length > 0) {
+                if (audioQueue.length > 0) {
                     audioQueue = [];
                 }
             }
@@ -660,11 +660,11 @@
             function audioEnded() {
                 console.log("Audio Ended");
 
-                if(audioQueue.length > 0) {
+                if (audioQueue.length > 0) {
                     var buf = audioQueue[0];
                     audioQueue.splice(0, 1);
                     playSound(buf);
-                } else if(followUpQuery) {
+                } else if (followUpQuery) {
                     sendQuery(followUpQuery);
                 }
             }
@@ -673,17 +673,17 @@
             // Delimitter is . and ,
             function splitSentences(string) {
 
-                if(string.length < 120)
+                if (string.length < 120)
                     return [string];
 
                 var str = string;
                 var l = 100;
 
                 var strs = [];
-                while(str.length > l){
+                while (str.length > l) {
                     var separator;
                     separator = str.substring(0, l).lastIndexOf('.') > 50 ? '.' : null;
-                    if(separator == null)
+                    if (separator == null)
                         separator = str.substring(0, l).lastIndexOf(',') > 50 ? ',' : ' ';
 
 
@@ -691,8 +691,8 @@
 
                     pos = pos <= 0 ? l : pos;
                     strs.push(str.substring(0, pos + 1));
-                    var i = str.indexOf(separator, pos)+1;
-                    if(i < pos || i > pos+l)
+                    var i = str.indexOf(separator, pos) + 1;
+                    if (i < pos || i > pos + l)
                         i = pos;
                     str = str.substring(i);
                 }
@@ -728,15 +728,15 @@
                     l_container.append(contentPlaceholder);
 
                     // Add Card View
-                    for(var i in messages) {
+                    for (var i in messages) {
                         var obj = messages[i];
-                        if(obj.type == 1 || obj.type == 4) {
+                        if (obj.type == 1 || obj.type == 4) {
                             addCardView(obj, contentPlaceholder);
                         }
                     }
 
                     // Render List Products
-                    if(fb_data['elements']) {
+                    if (fb_data['elements']) {
                         listFbCards(fb_data, chatHistory, action);
                     } else {
                         contentPlaceholder.append("<div><span>" + speechText + "</span></div>");
@@ -744,10 +744,10 @@
                     // Scroll to bottom
                     chatHistory.scrollTop(chatHistory[0].scrollHeight);
 
-                    if(true || isVoicRequest) {
+                    if (true || isVoicRequest) {
                         // Play audio
                         textToSpeech(speechText);
-                    } else  if(followUpQuery) {
+                    } else if (followUpQuery) {
                         sendQuery(followUpQuery);
                     }
                 } else {
@@ -759,12 +759,11 @@
             function getDatafromObject(json, key, def) {
                 var keys = key.split(".");
                 var tmp = json;
-                for(i=0; i<keys.length && key.length>0; i++)
-                {
-                    if(tmp[keys[i]] == null) {
+                for (i = 0; i < keys.length && key.length > 0; i++) {
+                    if (tmp[keys[i]] == null) {
                         tmp = null;
                         break;
-                    }else
+                    } else
                         tmp = tmp[keys[i]];
                 }
                 if (tmp == null && def != null)
@@ -784,17 +783,17 @@
 
                 var card = $(cardTag);
 
-                if(1 == cardData.type) {
+                if (1 == cardData.type) {
                     console.colorLog("Adding card with image");
 
                     var title = $(cardTitleTag).text(cardData.title);
                     card.append(title);
 
-                    if(cardData.buttons) {
+                    if (cardData.buttons) {
                         for (var i = 0; i < cardData.buttons.length; i++) {
                             var btn_data = cardData.buttons[i];
                             var temp_btn = $(cardBtnTag)
-                                .attr({'href': btn_data['postback'], 'target': '_blank'})
+                                .attr({ 'href': btn_data['postback'], 'target': '_blank' })
                                 .text(btn_data['text']);
                             card.append(temp_btn);
                         }
@@ -819,17 +818,17 @@
                     } else if (data.attachment) {
                         var attachment = data.attachment;
 
-                        for(var i in attachment) {
+                        for (var i in attachment) {
                             var l_attach = attachment[i];
 
-                            switch(l_attach.type) {
+                            switch (l_attach.type) {
                                 case 'video':
                                     addVideoCard(l_attach.url_list);
                                     break;
                                 case 'url':
                                     var url_list = l_attach.url_list;
 
-                                    for(var i in url_list) {
+                                    for (var i in url_list) {
                                         var l_obj = url_list[i];
 
                                         var card = $(cardWithYoutubeVideo);
@@ -867,13 +866,13 @@
                     var title = $(cardTitleTag).text(product['title']);
                     temp_card.append(title);
 
-                    if(pro_image) {
+                    if (pro_image) {
                         var product_img = $(imageTag).attr('src', pro_image);
                         temp_card.append(product_img);
                     }
 
                     // Showing subtitle for only the selected product
-                    if(product['subtitle']) {
+                    if (product['subtitle']) {
                         var subtitle = product['subtitle'];
                         // Replace \n and \r with <br> tag
                         subtitle = subtitle.replace(/\r?\n|\r/g, '<br>');
@@ -886,10 +885,10 @@
                         var select_btn = $(btnTag).text(btn_data['title']);
                         temp_card.append(select_btn);
 
-                        if('postback' == btn_data['type']) {
+                        if ('postback' == btn_data['type']) {
                             select_btn.attr('data-product', btn_data['payload']);
                         } else if ('web_url' == btn_data['type']) {
-                            select_btn.attr({'href': btn_data['url'], 'target': '_blank'})
+                            select_btn.attr({ 'href': btn_data['url'], 'target': '_blank' })
                                 .removeClass('btn-left');
                             product_img && product_img.addClass('img-block');
                         }
@@ -901,8 +900,8 @@
                 for (var i = 0; i < view_more.length; i++) {
                     var btn_data = view_more[i];
                     var temp_btn = $(seeMoreBtn)
-                            .text(btn_data['title'])
-                            .attr('data-product', btn_data['payload']);
+                        .text(btn_data['title'])
+                        .attr('data-product', btn_data['payload']);
                     content_placeholder.append(temp_btn);
                 }
 
@@ -917,20 +916,20 @@
             //         playWelcomeIntent();
             //     });
             // } else {
-                playWelcomeIntent();
+            playWelcomeIntent();
             // }
 
             function playWelcomeIntent() {
                 var welcomeCode = cookie.get("canPlayWelcome");
                 var canPlayWelcome = false;
-                if(welcomeCode == null) {
+                if (welcomeCode == null) {
                     canPlayWelcome = true;
-                    if(assistantOptions.loginToken)
+                    if (assistantOptions.loginToken)
                         cookie.set("canPlayWelcome", 1);
                     else
                         cookie.set("canPlayWelcome", 0);
                     console.log("First time playing welcome");
-                } else if(0 == welcomeCode && assistantOptions.loginToken) {
+                } else if (0 == welcomeCode && assistantOptions.loginToken) {
                     canPlayWelcome = true;
                     cookie.set("canPlayWelcome", 1);
                     console.log("After login playing welcome");
@@ -938,7 +937,7 @@
                     console.log("Not playing welcome");
                 }
 
-                if(canPlayWelcome) {
+                if (canPlayWelcome) {
                     Status.isVoicRequest = true;
                     sendQuery('welcome');
                 }
@@ -958,7 +957,7 @@
             var cardWithVideo = '<div class="card card-info"><video width="320" height="240" controls>' +
                 '<source src="" type="" class="card-img-bottom">Your browser does not support the video tag.</video></div>';
 
-            for(var i in url_list) {
+            for (var i in url_list) {
                 var videoUrl = url_list[i]
                 if (-1 != videoUrl.indexOf("youtu")) {
                     var card = $(cardWithYoutubeVideo);
@@ -970,11 +969,11 @@
                     // webm - MIME-type video/webm
                     // ogg - MIME-type video/ogg
                     var videoType;
-                    if(-1 != videoUrl.indexOf('.mp4')) {
+                    if (-1 != videoUrl.indexOf('.mp4')) {
                         videoType = 'video/mp4';
-                    } else if(-1 != videoUrl.indexOf('.webm')) {
+                    } else if (-1 != videoUrl.indexOf('.webm')) {
                         videoType = 'video/webm';
-                    } else if(-1 != videoUrl.indexOf('.ogg')) {
+                    } else if (-1 != videoUrl.indexOf('.ogg')) {
                         videoType = 'video/ogg';
                     }
 
@@ -986,7 +985,7 @@
         };
 
         function getYoutubeEmbedUrl(videoUrl) {
-            if(videoUrl.indexOf("watch") != -1) {
+            if (videoUrl.indexOf("watch") != -1) {
                 videoUrl = videoUrl.replace("watch?v=", "embed/");
                 videoUrl += "?ecver=2";
             }
@@ -999,7 +998,7 @@
 
         var cookie = {
             // Read cookie
-            get : function getCookie (name) {
+            get: function getCookie(name) {
                 var cookies = {};
                 var c = document.cookie.split('; ');
                 for (i = c.length - 1; i >= 0; i--) {
@@ -1010,7 +1009,7 @@
             },
 
             // create cookie
-            set : function createCookie (name, value, minutes) {
+            set: function createCookie(name, value, minutes) {
                 if (minutes) {
                     var date = new Date();
                     date.setTime(date.getTime() + (minutes * 60 * 1000));
@@ -1020,7 +1019,7 @@
                 document.cookie = name + "=" + value + expires + "; path=/";
             },
 
-            remove : function deleteCookie (name) {
+            remove: function deleteCookie(name) {
                 var date = new Date();
                 date.setTime(date.getTime() - 60 * 1000);
                 document.cookie = name + "=; expires=" + date.toGMTString() + "; path=/";
@@ -1057,7 +1056,7 @@
 
         // Check jQuery library already exists, If not create script tag. Then start kit
         if (!window.jQuery) {
-            createScriptTag(jqueryJS, function () {
+            createScriptTag(jqueryJS, function() {
                 $ = window.jQuery;
                 startAssistantKit();
             });
@@ -1076,8 +1075,8 @@
     var assistantOptions = {};
 
     var params = scriptTag.getAttribute('data-options')
-                .replace(/\n/g, "").replace(/\s+/g, "");
-    scriptTag.removeAttribute('data-options', '')
+        .replace(/\n/g, "").replace(/\s+/g, "");
+    // scriptTag.removeAttribute('data-options', '')
     var queries = params.split('&');
     if (queries.length > 0) {
         for (var i = 0; i < queries.length; i++) {
